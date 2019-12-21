@@ -59,10 +59,6 @@ function install_java {
 
    download ${url} ${filename}
 
-   java_rootdir=''
-   get_rootdir_in_tarfile ${filename} java_rootdir  # Pass reference (not $java_rootdir)
-
-
    if [[ ! -d ${install_dir} ]]; then
       mkdir -p ${install_dir}
    fi
@@ -71,6 +67,8 @@ function install_java {
 
    LOAD_JAVA_FILE="${HOME}/bin/java${version}"
    if [[ ! -f ${LOAD_JAVA_FILE} ]]; then
+      java_rootdir=''
+      get_rootdir_in_tarfile ${filename} java_rootdir  # Pass reference (not $java_rootdir)
       cat <<EOF > ${LOAD_JAVA_FILE}
 #!/bin/bash
 
@@ -90,23 +88,18 @@ function install_eclipse {
    install_ide $*
 }
 
-function install_ide {
+function install_android_studio {
    local url=${1}
    local installdir=${2}
    local prefix=${3}
    local suffix=${4}
    local executable=${5}
+   local icon=${6}
+
 
    local filename=$(basename ${url})
 
-   if [[ -z ${JAVA_HOME} ]]; then
-      echo "Please set JAVA_HOME" >&2
-      exit 1
-   fi
    download ${url} ${filename}
-
-   local ide_rootdir=''
-   get_rootdir_in_tarfile ${filename} ide_rootdir
 
    version=''
    get_infix_version ${filename} ${prefix} version ${suffix}
@@ -119,6 +112,45 @@ function install_ide {
 
    tar -zxvf ${filename} -C ${installdir}
 
+   local ide_rootdir=''
+   get_rootdir_in_tarfile ${filename} ide_rootdir
+   local installdir=${installdir}/$(basename ${ide_rootdir})
+
+   local name="${prefix}${version}"
+   local exec="${installdir}/${executable}"
+   local icon_path="${installdir}/${icon}"
+   add_ide_shortcut ${name} ${exec} ${icon_path}
+}
+
+function install_ide {
+   local url=${1}
+   local installdir=${2}
+   local prefix=${3}
+   local suffix=${4}
+   local executable=${5}
+
+
+   if [[ -z ${JAVA_HOME} ]]; then
+      echo "Please set JAVA_HOME" >&2
+      exit 1
+   fi
+
+   local filename=$(basename ${url})
+   download ${url} ${filename}
+
+   version=''
+   get_infix_version ${filename} ${prefix} version ${suffix}
+
+   installdir=${installdir}/${version}
+
+   if [[ ! -d ${installdir} ]]; then
+      mkdir -p ${installdir}
+   fi
+
+   tar -zxvf ${filename} -C ${installdir}
+
+   local ide_rootdir=''
+   get_rootdir_in_tarfile ${filename} ide_rootdir
    local installdir=${installdir}/$(basename ${ide_rootdir})
 
    if [[ ! -d ${installdir}/jre ]]; then
@@ -152,6 +184,5 @@ Categories=Application;Education;Development;ComputerScience;
 MimeType=application/x-eclipse-project
 EOF
 
-#   sudo chmod +x ${desktopEntry}
 }
 
