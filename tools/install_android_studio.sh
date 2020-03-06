@@ -4,6 +4,11 @@
 # After installation: 
 # SUPER-A --> Android studio --> right click and 'Add to Favorites'
 #
+# /dev/kvm device: permission denied
+# --> 
+# sudo apt install qemu-kvm
+# sudo usermod -aG kvm $USER
+
 
 # https://developer.android.com/studio
 DOWNLOAD_URL=https://dl.google.com/dl/android/studio/ide-zips/3.5.3.0/android-studio-ide-191.6010548-linux.tar.gz

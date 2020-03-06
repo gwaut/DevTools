@@ -114,7 +114,7 @@ function install_android_studio {
 
    local ide_rootdir=''
    get_rootdir_in_tarfile ${filename} ide_rootdir
-   local installdir=${installdir}/$(basename ${ide_rootdir})
+   installdir=${installdir}/$(basename ${ide_rootdir})
 
    local name="${prefix}${version}"
    local exec="${installdir}/${executable}"
@@ -151,7 +151,7 @@ function install_ide {
 
    local ide_rootdir=''
    get_rootdir_in_tarfile ${filename} ide_rootdir
-   local installdir=${installdir}/$(basename ${ide_rootdir})
+   installdir=${installdir}/$(basename ${ide_rootdir})
 
    if [[ ! -d ${installdir}/jre ]]; then
       [ ! -z $JAVA_HOME ] && ln -s $JAVA_HOME ${installdir}/jre
