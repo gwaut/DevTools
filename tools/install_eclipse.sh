@@ -6,7 +6,7 @@
 #
 
 # https://www.eclipse.org/downloads/packages/
-DOWNLOAD_URL=http://ftp.snt.utwente.nl/pub/software/eclipse//technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-linux-gtk-x86_64.tar.gz
+DOWNLOAD_URL=http://ftp.snt.utwente.nl/pub/software/eclipse//technology/epp/downloads/release/2020-03/R/eclipse-jee-2020-03-R-incubation-linux-gtk-x86_64.tar.gz
 
 
 CURRENTDIR=$(dirname $0)
