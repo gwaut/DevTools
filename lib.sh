@@ -65,8 +65,11 @@ function install_java {
 
    tar -zxvf ${filename} -C ${install_dir}
 
-   LOAD_JAVA_FILE="${HOME}/bin/java${version}"
+   LOAD_JAVA_FILE="${HOME}/bin/java${version}-env"
    if [[ ! -f ${LOAD_JAVA_FILE} ]]; then
+      if [[ ! -d ${HOME}/bin ]]; then
+         mkdir ${HOME}/bin
+      fi
       java_rootdir=''
       get_rootdir_in_tarfile ${filename} java_rootdir  # Pass reference (not $java_rootdir)
       cat <<EOF > ${LOAD_JAVA_FILE}
