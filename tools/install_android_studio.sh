@@ -11,7 +11,7 @@
 
 
 # https://developer.android.com/studio
-DOWNLOAD_URL=https://dl.google.com/dl/android/studio/ide-zips/3.5.3.0/android-studio-ide-191.6010548-linux.tar.gz
+DOWNLOAD_URL=https://redirector.gvt1.com/edgedl/android/studio/ide-zips/3.6.3.0/android-studio-ide-192.6392135-linux.tar.gz
 
 CURRENTDIR=$(dirname $0)
 . ${CURRENTDIR}/../lib.sh
