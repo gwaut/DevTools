@@ -21,6 +21,7 @@ function fail_if_dir_does_not_exist  {
 function get_rootdir_in_tarfile {
    local tarfile=${1}
    local rootdir=$(tar tf ${tarfile} | head -1)
+   rootdir=${rootdir%%\/*}
    eval "$2=$rootdir"
 }
 
