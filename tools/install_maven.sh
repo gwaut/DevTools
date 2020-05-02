@@ -15,7 +15,7 @@ function install_maven {
    local installdir=${2}
 
    local filename=$(basename ${url})
-   download ${DOWNLOAD_URL} ${filename}
+   download ${url} ${filename}
 
    if [[ ! -d ${installdir} ]]; then
       mkdir -p ${installdir}
@@ -36,7 +36,7 @@ function add2java_env {
    local mvn_bin_path=${1}
    local bindir=${HOME}/bin
    for javaEnvFile in $(ls ${bindir}/java*-env); do
-      grep ${mvn_bin_path} ${javaEnvFile}
+      grep ${mvn_bin_path} ${javaEnvFile} >> /dev/null
       if [[ $? -ne 0 ]]; then
          echo "export PATH=\${PATH}:${mvn_bin_path}" >> ${javaEnvFile}
       fi
