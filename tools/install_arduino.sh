@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-DOWNLOAD_URL=https://downloads.arduino.cc/arduino-1.8.12-linux64.tar.xz
+DOWNLOAD_URL=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz
 
 CURRENTDIR=$(dirname $0)
 . ${CURRENTDIR}/../lib.sh
