@@ -2,6 +2,7 @@
 
 # https://www.postgresql.org/ftp/source/
 DOWNLOAD_URL=https://ftp.postgresql.org/pub/source/v12.3/postgresql-12.3.tar.gz
+DOWNLOAD_POSTGIS_URL=https://download.osgeo.org/postgis/source/postgis-3.0.1.tar.gz
 
 #sudo apt-get install libreadline-dev libssl-dev libxslt1-dev libossp-uuid-dev
 CURRENTDIR=$(dirname $0)
@@ -78,6 +79,41 @@ EOF
 }
 
 
+function install_postgis {
+    local url=${1}
+    local installdir=${2}
+    local builddir='/tmp'
+
+    local filename=$(basename ${url})
+    download ${url} ${filename}
+
+    tar -zxvf ${filename} -C ${builddir}
+
+    srcdir=''
+    get_rootdir_in_tarfile ${filename} srcdir  # Pass reference (not $srcdir)
+
+    cd ${builddir}/${srcdir}
+    ./configure --prefix=${installdir} --with-pgconfig=${installdir}/bin/pg_config
+
+
+    make
+    check_status $?
+    
+    make comments
+    check_status $?
+    
+    make install
+    check_status $?
+    
+    make comments-install
+    check_status $?
+
+    cd -
+}
+
 install_postgresql ${DOWNLOAD_URL} ${filename} ${INSTALLDIR}
 major_version=${version%%.*}
 pg_env ${major_version} ${INSTALLDIR}/bin
+
+# sudo apt-get install libgeos-dev libproj-dev libjson-c-dev libgdal-dev
+install_postgis ${DOWNLOAD_POSTGIS_URL} ${INSTALLDIR}
