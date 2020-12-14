@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # https://www.postgresql.org/ftp/source/
-DOWNLOAD_URL=https://ftp.postgresql.org/pub/source/v12.3/postgresql-12.3.tar.gz
-DOWNLOAD_POSTGIS_URL=https://download.osgeo.org/postgis/source/postgis-3.0.1.tar.gz
+DOWNLOAD_URL=https://ftp.postgresql.org/pub/source/v13.1/postgresql-13.1.tar.gz
+DOWNLOAD_POSTGIS_URL=https://download.osgeo.org/postgis/source/postgis-3.0.3.tar.gz
 
 #sudo apt-get install libreadline-dev libssl-dev libxslt1-dev libossp-uuid-dev
 CURRENTDIR=$(dirname $0)
