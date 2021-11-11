@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot#x64_linux
-DOWNLOAD_URL=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz
+# https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot
+DOWNLOAD_URL=https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
 JAVA_VERSION=11
 
 CURRENTDIR=$(dirname $0)
@@ -10,4 +10,4 @@ CURRENTDIR=$(dirname $0)
 
 INSTALLDIR=${TOOLDIR}/Java
 
-install_java ${DOWNLOAD_URL} ${INSTALLDIR} ${JAVA_VERSION}
+install_java_with_alternatives ${DOWNLOAD_URL} ${INSTALLDIR} ${JAVA_VERSION}

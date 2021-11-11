@@ -48,40 +48,76 @@ function get_infix_version {
    eval "$3=$prefix_removed"
 }
 
-
-
-
-function install_java {
+function install_java_with_alternatives {
    local url=${1}
    local install_dir=$2
    local version=$3
 
-   local filename=$(basename ${url})
+   local tarfile=$(basename ${url})
+   download_file_and_extract_in_dir ${url} ${tarfile} ${install_dir}
 
-   download ${url} ${filename}
+   java_home=''
+   get_java_home_dir ${tarfile} ${install_dir} java_home   # pass reference!
 
-   if [[ ! -d ${install_dir} ]]; then
-      mkdir -p ${install_dir}
+   create_java_load_file ${java_home} ${version}
+
+}
+
+
+function create_java_load_file {
+   local java_home=${1}
+   local java_version=${2}
+
+   java_load_file="${HOME}/bin/setjava-${version}"
+   if [[ -f ${java_load_file} ]]; then
+      rm ${java_load_file}
    fi
-
-   tar -zxvf ${filename} -C ${install_dir}
-
-   LOAD_JAVA_FILE="${HOME}/bin/java${version}-env"
-   if [[ ! -f ${LOAD_JAVA_FILE} ]]; then
-      if [[ ! -d ${HOME}/bin ]]; then
-         mkdir ${HOME}/bin
-      fi
-      java_rootdir=''
-      get_rootdir_in_tarfile ${filename} java_rootdir  # Pass reference (not $java_rootdir)
-      cat <<EOF > ${LOAD_JAVA_FILE}
+    
+   cat <<EOF > ${java_load_file}
 #!/bin/bash
 
-export JAVA_HOME=${INSTALLDIR}/$(basename ${java_rootdir})
-export PATH=\${JAVA_HOME}/bin:\${PATH}
+export JAVA_HOME=${java_home}
+
 EOF
+   add_alternatives_to_load_file ${java_home} ${java_load_file}
+
+   chmod +x ${java_load_file}
+}
+
+function add_alternatives_to_load_file {
+   local java_home=${1}
+   local java_load_file=${2}
+
+   for java_executable in $(ls ${java_home}/bin); do
+      sudo update-alternatives --install /usr/bin/${java_executable} ${java_executable} ${java_home}/bin/${java_executable} 1
+      echo "sudo update-alternatives --set ${java_executable} ${java_home}/bin/${java_executable} >>/dev/null" >> ${java_load_file}
+   done
+
+}
+
+
+function download_file_and_extract_in_dir {
+   local url=$1
+   local local_filename=$2
+   local dir=$3
+   
+   download ${url} ${local_filename}
+    
+   if [[ ! -d ${dir} ]]; then
+      mkdir -p ${dir}
    fi
 
-   chmod +x ${LOAD_JAVA_FILE}
+   tar -zxvf ${local_filename} -C ${dir}
+}
+
+function get_java_home_dir {
+   local tarfile=${1}
+   local install_dir=${2}
+
+   java_rootdir=''
+   get_rootdir_in_tarfile ${tarfile} java_rootdir  # Pass reference (not $java_rootdir)
+   java_home_dir=${install_dir}/${java_rootdir}
+   eval "$3=$java_home_dir"
 }
 
 function install_sts {
