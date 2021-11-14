@@ -1,4 +1,5 @@
 # my aliases: add the following lines to ~/.bash_aliases
-alias java11=". java11-env"
-alias java13=". java13-env"
+alias java11=". setjava-8"
+alias java13=". setjava-11"
+alias java17=". setjava-17"
 alias vscode="code ."
