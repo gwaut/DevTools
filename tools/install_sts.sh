@@ -6,7 +6,7 @@
 #
 
 # https://spring.io/tools/
-DOWNLOAD_URL=https://download.springsource.com/release/STS4/4.16.0.RELEASE/dist/e4.25/spring-tool-suite-4-4.16.0.RELEASE-e4.25.0-linux.gtk.x86_64.tar.gz
+DOWNLOAD_URL=https://download.springsource.com/release/STS4/4.17.1.RELEASE/dist/e4.26/spring-tool-suite-4-4.17.1.RELEASE-e4.26.0-linux.gtk.x86_64.tar.gz
 
 CURRENTDIR=$(dirname $0)
 . ${CURRENTDIR}/../lib.sh
